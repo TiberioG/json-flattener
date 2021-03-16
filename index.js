@@ -1,39 +1,30 @@
+const flatReduce = (obj) => {
+
+  const _recursiveReduce = (obj, fatherKey) => {
+    return Object.entries(obj).reduce((acc, [key, val]) => {
+      (typeof val != 'object')
+        ? acc.push([fatherKey ? `${fatherKey}.${key}` : key, val])
+        : _recursiveReduce(val, key).forEach(([key, val]) => acc.push([fatherKey ? `${fatherKey}.${key}` : key, val]))
+      return acc
+    }, [])
+  }
+  return (Object.fromEntries(_recursiveReduce(obj)))
+}
+
+
 let mock = {
   a: 1,
   b: true,
   c: {
     d: 3,
     e: "test",
-    f : {
-      g : {
+    f: {
+      g: {
         h: "testdeep"
       }
     }
-
   }
 }
 
 
-const flatReduce = (obj, fatherKey) => {
-
-
-  return Object.entries(obj).reduce((acc, [key, val]) => {
-    if (typeof val != 'object') {
-      !fatherKey ?
-        acc.push([key, val])
-        : acc.push([fatherKey + '.' + key, val])
-    } else {
-      flatReduce(val, key).forEach(([key, val] ) => {
-        !fatherKey ?
-          acc.push([key, val])
-          : acc.push([fatherKey + '.' + key, val])
-      })
-    }
-    return acc
-  }, [])
-
-
-}
-
-
-console.log(Object.fromEntries(flatReduce(mock)))
+console.log(flatReduce(mock))
