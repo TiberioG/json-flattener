@@ -78,19 +78,23 @@ describe("FUNCTIONAL implementation suite", function () {
   });
 
   test("values null are stringified", () => {
-    expect(Object.values(target(objWithNull)).every((val) => val === 'null')).toBe(true);
+    expect(
+      Object.values(target(objWithNull)).every((val) => val === "null")
+    ).toBe(true);
   });
 
   test("values undefined are kept undefined", () => {
-    expect(Object.values(target(objWithUndefined)).every((val) => val === undefined)).toBe(true);
+    expect(
+      Object.values(target(objWithUndefined)).every((val) => val === undefined)
+    ).toBe(true);
   });
 }); //end Functional suite
 
 /*
-PROCEDURAL SUITE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+IMPERATIVE SUITE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
-describe("PROCEDURAL implementation suite", function () {
-  const target = flattener.proc;
+describe("IMPERATIVE implementation suite", function () {
+  const target = flattener.imp;
   test("output should be a valid JSON (large mock)", () => {
     expect(typeof target(largeJson)).toBe("object");
   });
@@ -112,10 +116,14 @@ describe("PROCEDURAL implementation suite", function () {
   });
 
   test("values null are stringified", () => {
-    expect(Object.values(target(objWithNull)).every((val) => val === 'null')).toBe(true);
+    expect(
+      Object.values(target(objWithNull)).every((val) => val === "null")
+    ).toBe(true);
   });
 
   test("values undefined are kept undefined", () => {
-    expect(Object.values(target(objWithUndefined)).every((val) => val === undefined)).toBe(true);
+    expect(
+      Object.values(target(objWithUndefined)).every((val) => val === undefined)
+    ).toBe(true);
   });
 }); //end Functional suite

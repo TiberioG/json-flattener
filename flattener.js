@@ -1,4 +1,4 @@
-const myJson = require(process.argv.slice(2)[1] || "./default.json");
+const myJson = require(process.argv.slice(2)[1] || "./testJson/default.json");
 const option = process.argv.slice(2)[0];
 
 /**
@@ -45,7 +45,7 @@ const flatFunctional = (obj) => {
  * @param fatherKey it is used by recursive calls, you can use to set a top level key
  * @returns {{}} a flattened object, use JSON.stringify if you want it stringified
  */
-function flatProcedural(node, flattened = {}, fatherKey = null) {
+function flatImperative(node, flattened = {}, fatherKey = null) {
   if (typeof node === "object" && node !== null) {
     // iterating over all the first level childs of the object
     for (const key in node) {
@@ -56,14 +56,13 @@ function flatProcedural(node, flattened = {}, fatherKey = null) {
           childKey = fatherKey + "." + key;
         } else childKey = key;
         //recursive cal passing the child node and the new key
-        flatProcedural(node[key], flattened, childKey);
+        flatImperative(node[key], flattened, childKey);
       }
     }
-  }
-  else if (node === null){
+  } else if (node === null) {
     //here I choose to stringify null but other solution are possible
     //like ignoring that case, or using an empty string
-    flattened[fatherKey] = 'null'
+    flattened[fatherKey] = "null";
   }
   //this branch if we reached a leaf, so we push the value in our flattened object
   else {
@@ -74,18 +73,18 @@ function flatProcedural(node, flattened = {}, fatherKey = null) {
 
 module.exports = {
   func: flatFunctional,
-  proc: flatProcedural,
+  imp: flatImperative,
 };
 
 switch (option) {
-  case "--proc":
-    console.log(flatProcedural(myJson));
+  case "--imp":
+    console.log(flatImperative(myJson));
     break;
   case "--func":
     console.log(flatFunctional(myJson));
     break;
   default:
     console.log(
-      "You must specify an option --proc or --func before path to JSON"
+      "You must specify an option --proc or --imp before path to JSON"
     );
 }
